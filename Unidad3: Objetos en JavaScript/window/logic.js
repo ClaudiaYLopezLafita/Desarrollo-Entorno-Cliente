@@ -61,7 +61,7 @@ function cerrarVentana(){
     
     if (!myVentana) {
         // en caso de que nunca se haya abierto la ventana 
-        mensaje = "¿Nunca se ha abierto la ventana!";
+        mensaje = "¡Nunca se ha abierto la ventana!";
     } else {
 
         myVentana.closed ? mensaje = "La ventana está cerrada." : mensaje = "La ventana está abierta.";
