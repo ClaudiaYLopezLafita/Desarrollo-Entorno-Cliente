@@ -15,16 +15,14 @@
 
 function transformarMayuscula() {
     let cadena = document.getElementById('texto').value;
-    let intervalo = document.getElementById('posicion').value;
-
-    for (let i=intervalo-1; i<cadena.length;i+=intervalo) {
-        
+    let pos = parseInt(document.getElementById('posicion').value);
+    debugger
+    for (let i=pos-1; i<cadena.length;i=i+pos) {
         if (cadena.charAt(i)==cadena.charAt(i).toUpperCase()) {
             cadena=cadena.substr(0,i)+cadena.charAt(i).toLowerCase()+cadena.substr(i+1);
         } else {
             cadena=cadena.substr(0,i)+cadena.charAt(i).toUpperCase()+cadena.substr(i+1);
         }
     }
-    
     document.getElementById('resultado').innerHTML=cadena;
 }
