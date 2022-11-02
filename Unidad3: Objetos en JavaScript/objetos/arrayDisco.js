@@ -368,7 +368,7 @@ function consultaIndice(lista){
 function consultaNombre(lista){
 
     let nombre = prompt(
-        "Indique el nombre del disco del que desea consultar la posición (Ej: Más):"
+        "Indique el nombre del disco del que desea consultar la posición (Ej: Once):"
     );
     let indice;
 
