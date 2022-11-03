@@ -36,6 +36,6 @@ function calculoFmc(){
 
     fmc =  220 - edad;
     
-    document.getElementById('resultado').innerHTML=`Con una edad de ${edad}`+
+    document.getElementById('resultado2').innerHTML=`Con una edad de ${edad}`+
                                                      `\n Tiene un FMC de ${fmc}.`
 }
