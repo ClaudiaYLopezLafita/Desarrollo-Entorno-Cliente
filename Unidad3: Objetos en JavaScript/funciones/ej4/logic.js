@@ -14,13 +14,19 @@
 
 
 function transformarMayuscula() {
+    // obtenemos el valor de nuestra cadena
     let cadena = document.getElementById('texto').value;
+    //obtenemos el valor de cada cuantas posiciones queremos modificar
     let pos = parseInt(document.getElementById('posicion').value);
-    debugger
+
+    //  vamos recoriendo la cadaneca cada x posiciones 
     for (let i=pos-1; i<cadena.length;i=i+pos) {
+        // comprobamos si el caracter de la posicion es MAY o no 
         if (cadena.charAt(i)==cadena.charAt(i).toUpperCase()) {
+            //si es mayuscula la cambiamos a MIN y concatendolo a las subcadenas anteriors y posteriores
             cadena=cadena.substr(0,i)+cadena.charAt(i).toLowerCase()+cadena.substr(i+1);
         } else {
+            //si es mayuscula la cambiamos a MAY y concatendolo a las subcadenas anteriors y posteriores
             cadena=cadena.substr(0,i)+cadena.charAt(i).toUpperCase()+cadena.substr(i+1);
         }
     }
