@@ -16,7 +16,7 @@ function formulas() {
  console.log ("El área de un círculo de radio 2 es " + f.areaCirculo(2));
 
  //EJ2
- let saludo = "hola mundo";
+// let saludo = "hola mundo";
  let tiempos = 4;
 
  if(tiempos > 3){
