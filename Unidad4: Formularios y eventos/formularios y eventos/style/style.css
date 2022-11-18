@@ -1,0 +1,26 @@
+/*
+Project: Juego memory
+Version: 1.0
+Last change: 17.11.2022
+Assigned to: Claudia Y Lopez Lafita
+--------------------[TABLA DE CONTENIDOS]----------------------
+
+----------------------[CÓDIGOS DE COLOR]------------------------
+
+----------------------[FUENTES Y TIPOGRAFIAS]-------------------
+
+----------------------------------------------------------------
+*/
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    background-color: #900c3f;
+}
