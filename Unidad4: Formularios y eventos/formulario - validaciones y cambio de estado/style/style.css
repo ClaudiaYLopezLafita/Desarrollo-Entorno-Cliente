@@ -1,0 +1,64 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400);
+
+form{
+    padding: 60px;
+    max-width: 400px;
+    background-color: #E7E7E7;
+    margin: 50px auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+form input[type='text'],input[type='number'], select, label{
+    margin-bottom: 15px;
+    font-family: "Roboto", sans-serif;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box; 
+    border: none; 
+    color: #17202A; 
+    font-size: 1em;
+    resize: none; 
+}
+
+input[type='submit'],input[type='reset'] {
+    display: inline-block;
+    padding: 10px 45px 10px 45px;
+    margin-top: 10px;
+    border: 0;
+    font-size: 1em; 
+    color: 	white;
+    font-family: "Roboto", sans-serif;
+}
+
+input[type='submit']{
+    background-color: #0095eb;
+    margin-left: 20px;
+}
+
+input[type='reset']{
+    background-color: red;
+    margin-left: 80px;
+}
+
+/*Validacion css*/
+
+input[type='text']:invalid{
+    border: 1px solid red;
+}
+
+#anyoPublic:out-of-range{
+    background-color: #E6B0AA ;
+}
+
+/*Efect in button*/
+form input[type='submit']:hover{
+    background-color: #046193;
+}
+
+form input[type='reset']:hover{
+    background-color: #922B21 ;
+}
+
