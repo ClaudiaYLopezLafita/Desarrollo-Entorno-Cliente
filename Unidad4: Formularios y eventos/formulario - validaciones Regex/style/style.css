@@ -1,0 +1,97 @@
+/*
+Project: Validación Regex - Formulario
+Version: 1.0
+Last change: 19.11.2022
+Assigned to: Claudia Y Lopez Lafita
+
+--------------------[TABLA DE CONTENIDOS]----------------------
+
+1. Body Rules
+2. Form Rules
+
+----------------------[CÓDIGOS DE COLOR]------------------------
+rojo:  red
+sombra oscura media de rojo : #922B21
+sombra claro de rojo: #E6B0AA
+blanco: #fff
+beckers Lovikagrå 505: #D9D9D9
+Pure (or mostly pure) azul:#0095eb
+sombra oscura media de cian-azul: #046193
+sombra muy oscuro de cian-azul: #17202A
+#e3fdf5 
+#FFE6FA 
+
+----------------------[FUENTES Y TIPOGRAFIAS]-------------------
+"Roboto", sans-serif
+----------------------------------------------------------------
+*/
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400);
+
+/*Start body rules*/
+body{
+    background-image: linear-gradient(-225deg, #cff7eb 20%, #f8cff0 100%);
+}
+/*End body rules*/
+
+
+/*Start form rules */
+form{
+    padding: 60px;
+    max-width: 400px;
+    margin: 50px auto;
+    background-image: linear-gradient(-225deg, #E3FDF5 50%, #FFE6FA 50%);
+    border: 0.5px solid black;
+}
+
+h1 {
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+}
+
+form input[type='text'],input[type='number'], input[type='date'], label{
+    margin-bottom: 15px;
+    font-family: "Roboto", sans-serif;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box; 
+    border: none; 
+    color: #17202A; 
+    font-size: 1em;
+    resize: none; 
+}
+
+input[type='submit'],input[type='reset'] {
+    display: inline-block;
+    padding: 10px 45px 10px 45px;
+    margin-top: 10px;
+    border: 0;
+    font-size: 1em; 
+    color: 	white;
+    font-family: "Roboto", sans-serif;
+}
+
+input[type='submit']{
+    background-color: #0095eb;
+    margin-left: 20px;
+}
+
+input[type='reset']{
+    background-color: red;
+    margin-left: 80px;
+}
+
+form input[type='submit']:hover{
+    background-color: #046193;
+}
+
+form input[type='reset']:hover{
+    background-color: #922B21 ;
+}
+
+input:focus {
+    transform: translateX(-2px);
+    border-radius: 5px;
+}
+/*End form rules*/
+

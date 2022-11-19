@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario - 4</title>
+
+    <!--CSS FILE-->
+    <link rel="stylesheet" href="./style/style.css">
+</head>
+<body>
+    <div id="container">
+        
+        <form action="#" method="post" id="formulario">
+            <h1>&bull;REGISTRO &bull;</h1>
+
+            <div class="fecha">
+                <label for="fecha">Fecha: </label>
+                <input type="date"  id="fecha" >
+            </div>
+            <div class="cocinero">
+                <label for="cocinero">Cocinero:</label>
+                <input type="text" placeholder="ej. WW$1234"  id="cocinero" >
+            </div>
+            <div class="destinatario">
+                <label for="destinatario">Destinatario:</label>
+                <input type="text" placeholder="ej. NM_alburquerque:1234"  id="destinatario" >
+            </div>
+            <div class="gramo">
+                <label for="gramo">Gramos:</label>
+                <input type="text" placeholder="[100-5000]"  id="gramos" >
+            </div>
+            <div class="composicion">
+                <label for="composicion">Composición: </label>
+                <input type="text" placeholder="ej. 200gC3OH7" id="composicion" >
+            </div>
+            <div class="numBancario">
+                <label for="numBancario">Num bancario:</label>
+                <input type="text" placeholder="ej. NM11-111111111111-11"  id="numBancario" >
+                <p id="cuenta"></p>
+            </div>
+            <div class="button">
+                <input type="submit" value="Send" id="send_button" />
+                <input type="reset" value="Reset" id="reset_button" />
+            </div>
+        </form>
+    </div>
+</body>
+</html>
