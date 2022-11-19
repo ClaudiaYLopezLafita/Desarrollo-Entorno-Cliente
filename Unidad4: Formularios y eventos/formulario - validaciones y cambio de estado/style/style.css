@@ -1,3 +1,28 @@
+/*
+Project: Validación básica de formularios
+Version: 1.0
+Last change: 19.11.2022
+Assigned to: Claudia Y Lopez Lafita
+--------------------[TABLA DE CONTENIDOS]----------------------
+1. Estilo formulario
+2. Efectos en botones
+3. Validación CSS
+
+----------------------[CÓDIGOS DE COLOR]------------------------
+rojo:  red
+sombra oscura media de rojo : #922B21
+sombra claro de rojo: #E6B0AA
+blanco: #fff
+beckers Lovikagrå 505: #D9D9D9
+Pure (or mostly pure) azul:#0095eb
+sombra oscura media de cian-azul: #046193
+sombra muy oscuro de cian-azul: #17202A
+
+----------------------[FUENTES Y TIPOGRAFIAS]-------------------
+"Roboto", sans-serif
+----------------------------------------------------------------
+*/
+
 @import url(https://fonts.googleapis.com/css?family=Roboto:400);
 
 form{
@@ -43,16 +68,6 @@ input[type='reset']{
     margin-left: 80px;
 }
 
-/*Validacion css*/
-
-input[type='text']:invalid{
-    border: 1px solid red;
-}
-
-#anyoPublic:out-of-range{
-    background-color: #E6B0AA ;
-}
-
 /*Efect in button*/
 form input[type='submit']:hover{
     background-color: #046193;
@@ -60,5 +75,14 @@ form input[type='submit']:hover{
 
 form input[type='reset']:hover{
     background-color: #922B21 ;
+}
+
+/*Validacion js-css*/
+
+.error{
+    border: 1px solid red;
+}
+.errorEtiqueta {
+    color: red;
 }
 
