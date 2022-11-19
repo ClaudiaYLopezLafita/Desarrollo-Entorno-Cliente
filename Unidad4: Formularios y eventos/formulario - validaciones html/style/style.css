@@ -1,0 +1,81 @@
+/*
+Project: Validación básica de formularios
+Version: 1.0
+Last change: 19.11.2022
+Assigned to: Claudia Y Lopez Lafita
+--------------------[TABLA DE CONTENIDOS]----------------------
+1. Estilo formulario
+2. Efectos en botones
+
+----------------------[CÓDIGOS DE COLOR]------------------------
+rojo:  red
+sombra oscura media de rojo : #922B21
+sombra claro de rojo: #E6B0AA
+blanco: #fff
+beckers Lovikagrå 505: #D9D9D9
+Pure (or mostly pure) azul:#0095eb
+sombra oscura media de cian-azul: #046193
+sombra muy oscuro de cian-azul: #17202A
+
+----------------------[FUENTES Y TIPOGRAFIAS]-------------------
+"Roboto", sans-serif
+----------------------------------------------------------------
+*/
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400);
+
+/*Estilo formulario*/
+form{
+    padding: 60px;
+    max-width: 400px;
+    background-color: #d9d9d9;
+    margin: 50px auto;
+}
+
+h1 {
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+}
+
+form input[type='text'],input[type='number'], select, label{
+    margin-bottom: 15px;
+    font-family: "Roboto", sans-serif;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box; 
+    border: none; 
+    color: #17202A; 
+    font-size: 1em;
+    resize: none; 
+}
+
+input[type='submit'],input[type='reset'] {
+    display: inline-block;
+    padding: 10px 45px 10px 45px;
+    margin-top: 10px;
+    border: 0;
+    font-size: 1em; 
+    color: 	white;
+    font-family: "Roboto", sans-serif;
+}
+
+input[type='submit']{
+    background-color: #0095eb;
+    margin-left: 20px;
+}
+
+input[type='reset']{
+    background-color: red;
+    margin-left: 80px;
+}
+
+
+/*Efectos en botones*/
+form input[type='submit']:hover{
+    background-color: #046193;
+}
+
+form input[type='reset']:hover{
+    background-color: #922B21 ;
+}
+
