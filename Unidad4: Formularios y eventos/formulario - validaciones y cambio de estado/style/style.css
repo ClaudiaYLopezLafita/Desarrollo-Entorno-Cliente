@@ -79,9 +79,11 @@ form input[type='reset']:hover{
 
 /*Validacion js-css*/
 
+/*input*/
 .error{
-    border: 1px solid red;
+    border: 1px solid red !important;
 }
+/*label*/
 .errorEtiqueta {
     color: red;
 }

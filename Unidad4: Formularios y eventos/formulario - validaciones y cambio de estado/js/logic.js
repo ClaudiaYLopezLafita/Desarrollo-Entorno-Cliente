@@ -71,5 +71,5 @@ function errorClass(elemento) {
     elemento.className = "error";
     //en la etiqueta label ponemos un clase
     elemento.previousElementSibling.className = "errorEtiqueta";
-    elemento.focus() ;
+    // elemento.focus() ;
 }
