@@ -95,3 +95,14 @@ input:focus {
 }
 /*End form rules*/
 
+/*Start error class rules */
+
+.error{
+    border: 1px solid red !important;
+}
+
+.errorEtiqueta {
+    color: red;
+}
+
+/*End error class rules*/
