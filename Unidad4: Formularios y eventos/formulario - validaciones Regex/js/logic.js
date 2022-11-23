@@ -119,10 +119,73 @@ function isValidComposicion(compo){
 }
 
 function validCuentaBancario(){
-
+    let cuenta = document.getElementById('numBancario');
+    return isValidCuentaBac(cuenta);
 }
-function isValidCuentaBac(){
-    
+function isValidCuentaBac(cuenta){
+    let regex = /^([A-Z]{2}\d{2}-\d{12}-\d{2})$/;
+    let numBac = cuenta.value;
+
+    if(regex.test(numBac)){
+        
+        if(!isValidFirstSegmento(numBac.subString(0,4)) || 
+        !isValidSecondSegmento(numBac.substring(5,20))){
+            errorClass(cuenta);
+            return false
+        }
+    }
+    return true;
+}
+function isValidFirstSegmento(num){
+
+    let letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    // obtenemos las dos primeras letras
+    let firstLetra=num[0];
+    let secondLetra=num[1];
+    //comprobamos que
+    if((firstLetter==="L" && secondLetter==="L")||(firstLetter==="Ñ" || secondLetter==="Ñ")){
+        return false;
+    }else{
+        //obtenmos los dos digitos
+        let digitos = num.subString(0,4);
+        // obtenemos el valor numerico de las letras
+        let firstValue = letras.indexOf(firstLetra)+1;
+        let secondValue = letras.indexOf(secondLetra)+1;
+        // obtenemos la suma de las letras
+        let sumValueLetras = firstValue+secondValue;
+        //comprobamos que la suma del valor de las letras coincide con los digitos
+        if(sumValueLetras===parseInt(digitos)){
+            //comprovamos que la suma de las letras sea mayor o menor a 10
+            if((sumValueLetras<10 && parseInt(digitos[0])===0) || (sumValueLetras>=10)){
+                return true
+            }
+        }
+    }
+}
+function isValidSecondSegmento(num){
+    //declaracion de varibles
+    let sumaFirstParte =0, sumaSecondParte=0, firstCondicion=0, secondCondicion=0;
+    // obtnemos los 12 digitos de la expresion
+    let doceDigitos = num.substring(0,12);
+    // obtenemos los dos ultimos digitos de la cadena
+    let ultimoDigito = parseInt(num[num.length-1]);
+    let penultimoDigito = num[num.length-2];
+    // subdividimos los 12 digitos en dos grupos de 6
+    let seisFirstDigitos = doceDigitos.substring(0,6);
+    let seisSecondDigitios = doceDigitos.subString(6,12);
+    // vamos sumnando los digitos de cada grupo de 6
+    for(let i = 0; i<seisFirstDigitos.length; i++){
+        sumaFirstParte += parseInt(seisFirstDigitos[i]);
+        sumaSecondParte += parseInt(seisSecondDigitios[i]);
+    }
+    // suma de los digitos de cada parte y dividido entre 6
+    firstCondicion = parseInt(sumaFirstParte/6);
+    secondCondicion = parseInt(sumaSecondParte/6);
+    // comprobamos que la condicion coincida con los digitos. 
+    if( penultimoDigito!==firstCondicion || ultimoDigito!==secondCondicion ){
+        return false;
+    }
+    return true;
 }
 
 function errorClass(elemento) {
