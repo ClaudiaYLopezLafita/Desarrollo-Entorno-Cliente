@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Ejemplo Básico Aplicación Web">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RA3</title>
+    <!-- La mayoria de los navegadores reconocen el archivo favicon.ico o favicon.png si están en la raiz del proyecto -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <!-- end Bootstrap CSS -->
+    <!-- css files -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- end js files -->
+  </head>
+
+  <body>
+    <!--[if IE]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <div class="container">
+      <h1>Entregable RA3 - DEWC</h1>
+      <p>Autora: Claudia Y López Lafita</p>
+
+      <div class="card">
+        <div id="ej1" class="card-body">
+          <p><b>Ejercicio 1 - Busqueda de Slug en una url</b></p>
+          <label for="slug">Indica que Slug buscamos:</label>
+          <input type="text" name="slugInput" id="slug"><br>
+          <button type="button" class="btn btn-outline-success" onclick="inputSlug()">Validar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div id="ej2" class="card-body">
+          <p><b>Ejercicio 2 - Validacion de DNI o NIE</b></p>
+          <label for="slug">Introducir el DNI o NIE:</label>
+          <input type="text" name="slugInput" id="dni" ><br>
+          <p style="font-size: small;">EJ: 12345678-X o X1234567B</p>
+          <button type="button" class="btn btn-outline-success" onclick="inputDniNie()">Validar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div id="ej3" class="card-body">
+          <p><b>Ejercicio 3 - Comparación de dos cadenas</b></p>
+          <label for="cad1">Introducir un texto:</label>
+          <input type="text" name="cad1Input" id="cad1" ><br>
+          <label for="cad2">Introducir un texto:</label>
+          <input type="text" name="cad2Input" id="cad2" ><br>
+          <button type="button" class="btn btn-outline-success" onclick="inputCadenas()">Comparar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div id="ej4" class="card-body">
+          <p><b>Ejercicio 4 - Validacion de login y cookies</b></p>
+          <a href="login.html" class="link-success" target="_blank"> Abrir formulario --></a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div id="ej5" class="card-body">
+          <p><b>Ejercicio 5 - Validacion de formulario y objeto window</b></p>
+          <a href="register.html" class="link-success" target="_blank"> Abrir formulario --></a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div id="ej6" class="card-body">
+          <p><b>Ejercicio 6 - Diferencia de fechas (año -> segundos)</b></p>
+          <button type="button" class="btn btn-outline-success" onclick="promptFechas()">Diferencia</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div id="ej7" class="card-body">
+          <p><b>Ejercicio 7 - Trasformar las fechas deletrando el mes</b></p>
+          <button type="button" class="btn btn-outline-success" onclick="promptFecha()">Transformar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div id="ej8" class="card-body">
+          <p><b>Ejercicio 8 - Salida de "resguardo" usando el objeto window</b></p>
+          <a href="participation-evento.html" class="link-success" target="_blank"> Abrir formulario --></a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div id="ej9" class="card-body">
+          <p><b>Ejercicio 9 - Creacion de un runner solicitando datos</b></p>
+          <button type="button" class="btn btn-outline-success" onclick="crearRunner()">Crear</button>
+          <p id="runner" style="font-size: small;"></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div id="ej10" class="card-body">
+          <p><b>Ejercicio 10 - listado de runners (array) por marca y busqueda de uno en concreto</b></p>
+          <button type="button" class="btn btn-outline-success" onclick="nameRunner()">Ordenar</button>
+          <h5 id="posicion"></h5>
+          <p id="result" style="font-size: small;"></p>
+        </div>
+      </div>    
+      
+    </div>
+  </div>
+
+    <!-- JavaScript -->
+    <!-- Primero jQuery, después Bootstrap JS -->
+    <script defer src="assets/js/jquery-3.2.1.slim.min.js"></script>
+    <script defer src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <!-- En ultimo lugar nuestros scripts -->
+    <script defer src="assets/js/index.js"></script>
+    <script defer src="assets/js/utils.js"></script>
+    <!-- end JavaScript -->
+
+  </body>
+</html>
