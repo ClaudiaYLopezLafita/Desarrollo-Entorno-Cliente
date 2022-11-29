@@ -26,6 +26,7 @@ function validar(e){
         validComposicion()&&
         validCuentaBancario()
     ) {
+        alert('LOGIN CORRECTO')
         return true;
     } else {
         e.preventDefault();
@@ -88,7 +89,7 @@ function validGramos(){
 }
 function isValidGramos(gramos){
     let gr = parseFloat(gramos.value)
-    debugger
+    
     if(!gr ||isNaN(gr) ||!inRange(gr) ){
         errorClass(gramos);
         return false;
@@ -96,7 +97,7 @@ function isValidGramos(gramos){
     return true;
 }
 function inRange(gr){
-    debugger
+    
     if(gr >=100 && gr <=500){
         return true;
     }
@@ -110,8 +111,7 @@ function validComposicion(){
 function isValidComposicion(compo){
 
     let regex = /^(\d{3,4}g[A-Z]{1,2}\d{0,1}[A-Z]{1,2}\d{0,1})$/;
-
-    if(!compo.value || !regex.test(comp)){
+    if(!compo.value || !regex.test(compo)){
         errorClass(compo);
         return false;
     }
@@ -125,7 +125,7 @@ function validCuentaBancario(){
 function isValidCuentaBac(cuenta){
     let regex = /^([A-Z]{2}\d{2}-\d{12}-\d{2})$/;
     let numBac = cuenta.value;
-
+    debugger
     if(regex.test(numBac)){
         
         if(!isValidFirstSegmento(numBac.subString(0,4)) || 
@@ -137,13 +137,13 @@ function isValidCuentaBac(cuenta){
     return true;
 }
 function isValidFirstSegmento(num){
-
+    debugger
     let letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     // obtenemos las dos primeras letras
     let firstLetra=num[0];
     let secondLetra=num[1];
     //comprobamos que
-    if((firstLetter==="L" && secondLetter==="L")||(firstLetter==="Ñ" || secondLetter==="Ñ")){
+    if((firstLetra==="L" && secondLetra==="L")||(firstLetra==="Ñ" || secondLetra==="Ñ")){
         return false;
     }else{
         //obtenmos los dos digitos
@@ -156,13 +156,14 @@ function isValidFirstSegmento(num){
         //comprobamos que la suma del valor de las letras coincide con los digitos
         if(sumValueLetras===parseInt(digitos)){
             //comprovamos que la suma de las letras sea mayor o menor a 10
-            if((sumValueLetras<10 && parseInt(digitos[0])===0) || (sumValueLetras>=10)){
+            if((sumValueLetras<10 && parseInt(digitos[0])===0)){
                 return true
             }
         }
     }
 }
 function isValidSecondSegmento(num){
+    debugger
     //declaracion de varibles
     let sumaFirstParte =0, sumaSecondParte=0, firstCondicion=0, secondCondicion=0;
     // obtnemos los 12 digitos de la expresion
@@ -181,6 +182,7 @@ function isValidSecondSegmento(num){
     // suma de los digitos de cada parte y dividido entre 6
     firstCondicion = parseInt(sumaFirstParte/6);
     secondCondicion = parseInt(sumaSecondParte/6);
+    debugger
     // comprobamos que la condicion coincida con los digitos. 
     if( penultimoDigito!==firstCondicion || ultimoDigito!==secondCondicion ){
         return false;
