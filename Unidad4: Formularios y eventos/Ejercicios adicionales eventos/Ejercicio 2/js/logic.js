@@ -9,7 +9,7 @@ function clickChangeDiv(){
     console.log('Entrando en la funcion myFunction sin parámetro');
     //al elemento con id container le damos unos atributos determinados
     document.getElementById('container').style.cssText = 'padding:20px;' +
-                                                        'background-color:#D4AC0D;'+ 
+                                                        'background-color:#FFFF00;'+ 
                                                         'color:#0c0800;'+ 
                                                         'border:1px solid #0c0800;'+ 
                                                         'font-size:22px;';
@@ -22,7 +22,7 @@ document.addEventListener('keydown', keydownChangeBody,false);
 
 function keydownChangeBody(){
     console.log('Entrando en la funcion keydownChangeBody')
-    document.getElementById("body").style.backgroundColor = "#85C1E9";
+    document.getElementById("body").style.backgroundColor = "#CCE6FF";
 }
 
 /** 3. MOVER EL RATON */
