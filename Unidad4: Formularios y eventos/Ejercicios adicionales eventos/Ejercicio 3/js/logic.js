@@ -1,6 +1,6 @@
 let img = document.getElementById("imgToChange");
 
-img.document.addEventListener("click",chageImage,false);
+img.document.addEventListener("mousedown",chageImage,false);
 img.document.addEventListener("mouseup",chageImageOriginal,false);
 
 function chageImage(){
