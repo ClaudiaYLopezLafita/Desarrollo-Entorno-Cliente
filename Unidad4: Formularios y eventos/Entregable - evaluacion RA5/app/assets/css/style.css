@@ -1,0 +1,188 @@
+/*
+Project: Entregable R5 - DWEC
+Version: 1.0
+Last change: 15.12.2022
+Assigned to: Claudia Y Lopez Lafita
+--------------------[TABLA DE CONTENIDOS]----------------------
+1. GENERAL
+2. VIDEO RULES
+3. NAVBAR RULES
+4. MAIN RULES
+5. PRINCIPAL RULES
+6. SIDEBAR RULES
+7. FOOTER RULES
+----------------------[CÓDIGOS DE COLOR]------------------------
+sombra de rojo:  #C41010
+blanco: #fff
+beckers Lovikagrå 505: #D9D9D9
+negro: black
+humo blanco: whitesmoke
+Ford Alberta Blue: #050A30
+----------------------[FUENTES Y TIPOGRAFIAS]-------------------
+'Racing Sans One', cursive
+'Montserrat', sans-serif
+----------------------------------------------------------------
+*/
+@import url('https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Racing+Sans+One&display=swap');
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #050a30;
+  font-family: 'Montserrat', sans-serif;
+  color: #333;
+}
+
+/* Star Navbar rules */
+
+.navbar{
+  background-color:#EAEDED;
+  padding: 0;
+}
+
+.navbar img{
+  width: 30%; 
+  height: 85%;
+  margin-left: 20%;
+}
+
+.navbar button{
+  height: 35px;
+  background-color: #FF1616;
+  color: #ffff;
+  font-weight: bold;
+  border-radius: 15px;
+  margin-left: 10px;
+}
+
+/*Cambios de estados de LI*/
+
+.active{
+  background-color: #C41010;
+  color: #ffff !important;
+  font-weight: bold;
+  border-radius: 15px;
+} 
+
+/* End Navbar rules */
+
+/* Starts main home rules*/
+
+.exercise{
+  height: 450px;
+  background-color: #ebecec;
+  border-radius: 20px;
+  padding: 5%;
+  margin-bottom: 30px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.exercise h1{
+  text-align: center;
+}
+
+.exercise #nameEvent{
+  font-family: 'Racing Sans One';
+  font-weight: lighter;
+}
+
+.exercise #countDown{
+  margin-top: 50px;
+  font-weight: bold;
+}
+
+.jumbotron{
+  background-color: #d9d9d9;
+  padding: 0;
+}
+
+/* End main home rules */
+
+/* Start main event */
+
+.row{
+  margin-left: 25px;
+}
+.container-fluid{
+  margin: 20px;
+  border-radius: 10px !important;
+}
+.col-sm-4{
+  padding-top: 20px;
+  font-weight: bold;
+}
+form{
+  margin: 20px 10px;
+}
+.col-sm-7 h6{
+  margin-top: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+.col-sm-7 h7{
+  margin-top: 20px;
+  text-align: center;
+}
+table{
+  margin-top: 30px;
+}
+/* End main event.html*/
+
+/* Start main login.html */
+
+#formRegistro{
+  background-color: #d9d9d9;
+  margin-left: 18%;
+  margin-right: 18%;
+  margin-top:2%;
+  padding: 5%;
+  border-radius: 5%;
+}
+
+#formRegistro h5{
+  text-align: center;
+  font-weight: bold;
+}
+
+#formRegistro button{
+  margin-left: 45%;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 28px;
+  font-weight: bolder;
+}
+
+select{
+  width: 62%;
+}
+
+.invalidInput{
+  background-color: #F1948A;
+  border-color: red !important;
+}
+.errorEtiqueta{
+  color: red !important;
+}
+.validInput{
+  background-color: white;
+  border-color: rgb(8, 202, 8) !important;
+}
+.successEtiqueta{
+  color: black !important;
+}
+small{
+  color: #FF1616;
+}
+
+/* End main login.html */
+
+/* Starts footer rules*/
+footer{
+  border-top: 3px solid #FF1616;
+}
+
+/* End footer rules*/
