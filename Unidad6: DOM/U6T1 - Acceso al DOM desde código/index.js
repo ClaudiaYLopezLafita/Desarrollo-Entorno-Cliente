@@ -47,6 +47,6 @@ for (const i of listLink) {
 document.getElementById("p6").innerHTML = `El numero de enlaces que apuntan a /wiki/Municipio es: ${numLink}`
 
 
-
+//query da una lista no dinámica, miestras que getElement si es dinámica 
 
 
