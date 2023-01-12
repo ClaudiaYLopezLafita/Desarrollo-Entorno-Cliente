@@ -34,13 +34,18 @@ let numLink=0;
 
 let listLink = document.getElementsByTagName("a");
 
-listLink.forEach((link) => {
-    let href = link.getAttribute("href")
-    if (href.include('/wiki/Municipio')){
+// listLink.forEach((link) => {
+//     if (link.href.include('/wiki/Municipio')){
+//         numLink++;
+//     }
+//     return numLink;
+// });
+
+for (const i of listLink) {
+    if (i.href.includes('/wiki/Municipio')){
         numLink++;
     }
-    return numLink;
-});
+}
 
 document.getElementById("p6").innerHTML = `El numero de enlaces que apuntan a /wiki/Municipio es: ${numLink}`
 
