@@ -21,6 +21,7 @@ document.getElementById("p4").innerHTML = `El contenido de hrf del primer link e
 // La dirección del penúltimo enlace.
 
 let penultimoLink = document.getElementsByTagName("a")[numEnlaces-2].getAttribute("href");
+let penultimoLinkOption = document.getElementsByTagName("a")[numEnlaces-2].href; //otra version
 document.getElementById("p5").innerHTML = `El contenido de hrf del penultimo link es: ${penultimoLink}`
 
 // El número de enlaces del primer párrafo.
@@ -28,24 +29,20 @@ document.getElementById("p5").innerHTML = `El contenido de hrf del penultimo lin
 let firsPLink = document.getElementsByTagName("p")[0].getElementsByTagName('a').length;
 document.getElementById("p7").innerHTML = `El numero de enlaces del primer parrafo es: ${firsPLink}`
 
-// El número de enlaces que apuntan a /wiki/Municipio
+// El número de enlaces que apuntan a /wiki/Municipio: No se puede usar un forEach dado que trabajo
+// con una lista no con Arrays
 
 let numLink=0;
 
 let listLink = document.getElementsByTagName("a");
 
-// listLink.forEach((link) => {
-//     if (link.href.include('/wiki/Municipio')){
-//         numLink++;
-//     }
-//     return numLink;
-// });
-
 for (const i of listLink) {
+    // podemos sustituir includes por match
     if (i.href.includes('/wiki/Municipio')){
         numLink++;
     }
 }
+
 
 document.getElementById("p6").innerHTML = `El numero de enlaces que apuntan a /wiki/Municipio es: ${numLink}`
 
