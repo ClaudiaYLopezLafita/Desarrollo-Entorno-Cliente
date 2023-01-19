@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- File JS-->
+    <script defer src="index.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="formContainer">
+            <h1>GENERADOR DE TABLA AUTOMATICAMENTE</h1>
+            <form id="formulario">
+                <div>
+                    <label for="numRow">Num. de Fila</label>
+                    <input type="text" name="numRow" id="numRow">
+                </div>
+                <div>
+                    <label for="numCol">Num. de Columnas</label>
+                    <input type="text" name="numCol" id="numCol">
+                </div>
+                <div id="check">
+                    <label for="header?">¿Quieres header?</label>
+                    <input type="checkbox" name="header?" id="header?">
+                </div>
+                <div>
+                    <label for="defaultext">Texto de celda por defecto</label>
+                    <input type="text" name="defaultext" id="defaultext">
+                </div>
+                <div>
+                    <label for="widthBorder">Grosor del borde</label>
+                    <input type="text" name="widthBorder" id="widthBorder">
+                </div>
+                <div>
+                    <label for="borderColor">Color del borde</label>
+                    <select name="borderColor" id="borderColor">
+                        <option value="RD">Red</option>
+                        <option value="BL">Blue</option>
+                        <option value="PK">Pink</option>
+                        <option value="GR">Green</option>
+                    </select>
+                </div>
+                <div>
+                    <input type="button" value="Generar tabla" id="createTable">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
