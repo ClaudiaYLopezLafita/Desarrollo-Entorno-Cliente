@@ -1,6 +1,40 @@
 
 document.getElementById("createTable").addEventListener("click", generateTable,true);
 
+let checkbox = document.querySelector("input[type=checkbox]")
+checkbox.addEventListener('change', function(){
+    if(this.checked){
+        let position = document.getElementById("check")
+    
+        let cols = parseInt(document.getElementById("numCol").value);
+
+        for (let j = 0; j < cols; j++){
+            let div = document.createElement("div");
+
+            let label = document.createElement("label")
+            let text = document.createTextNode(`Texto header col${j}`)
+            label.appendChild(text)
+
+            div.appendChild(label)
+
+            let input = document.createElement("input")
+            input.type="text"
+            input.id = `header${j}`
+
+            div.appendChild(input)
+
+            position.appendChild(div);
+        }
+    }
+})
+// document.getElementById("header?").addEventListener("change", generateHeader,true);
+// debugger
+// function generateHeader(){
+//     if(this.checked){
+       
+//     }
+// }
+
 function generateTable() {
 
     // obtenemos el elemento donde se pegará la tabla
