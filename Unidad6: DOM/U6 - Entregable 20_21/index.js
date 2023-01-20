@@ -73,7 +73,7 @@ function generateTable() {
                // creamos columa
                 let columnaTh = document.createElement("th")
                 columnaTh.style.cssText += `border: solid ${grosor}px ${color}; border-collapse: collapse;`
-                let textCelda = document.createTextNode(arrayThs[j].value);
+                let textCelda = document.createTextNode(arrayThs[j]);
                 // añadimos el texto a la celda
                 columnaTh.appendChild(textCelda)
                 // añadimos la celda a la fila
