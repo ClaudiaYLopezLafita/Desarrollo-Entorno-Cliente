@@ -12,7 +12,7 @@ checkbox.addEventListener('change', function(){
             let div = document.createElement("div");
 
             let label = document.createElement("label")
-            let text = document.createTextNode(`Texto header col${j}`)
+            let text = document.createTextNode(`Texto header col${j+1}`)
             label.appendChild(text)
 
             div.appendChild(label)
@@ -20,20 +20,14 @@ checkbox.addEventListener('change', function(){
             let input = document.createElement("input")
             input.type="text"
             input.id = `header${j}`
+            input.className='colH'
 
             div.appendChild(input)
 
-            position.appendChild(div);
+            position.append(div);
         }
     }
-})
-// document.getElementById("header?").addEventListener("change", generateHeader,true);
-// debugger
-// function generateHeader(){
-//     if(this.checked){
-       
-//     }
-// }
+}, true)
 
 function generateTable() {
 
@@ -55,32 +49,50 @@ function generateTable() {
     let grosor = document.getElementById("widthBorder").value
     let c = document.getElementById("borderColor")
     let color = c.options[c.selectedIndex].text
+    let thYes = document.getElementById("header").checked
+
+    let arrayThs = document.getElementsByClassName("colH");
+
+    // if() { rows+= 1}
 
     // añadimos estilo a la tabla y tbody
     tabla.style.cssText += `border: solid ${grosor}px ${color}; border-collapse: collapse;`
     tblBody.style.cssText += `border: solid ${grosor}px ${color}; border-collapse: collapse;`
-
+    console.log(rows)
     // segun las n filas inidicadas vamos creados la tabla
     for (let i = 0; i < rows; i++) {
         // creamos las filas
         let fila =  document.createElement("tr");
         fila.style.cssText += `border: solid ${grosor}px ${color}; border-collapse: collapse;`
+
         // en cada fila en bucle
         for (let j = 0; j < cols; j++) {
-            // creamos columa
-            let columna = document.createElement("td")
-            columna.style.cssText += `border: solid ${grosor}px ${color}; border-collapse: collapse;`
-            // cremos un texto
-            let textCelda = document.createTextNode(texto);
-            // añadimos el texto a la celda
-            columna.appendChild(textCelda)
-            // añadimos la celda a la fila
-            fila.appendChild(columna)
+
+            //colocamos los header
+            if(i==0 && thYes == true){
+               // creamos columa
+                let columnaTh = document.createElement("th")
+                columnaTh.style.cssText += `border: solid ${grosor}px ${color}; border-collapse: collapse;`
+                let textCelda = document.createTextNode(arrayThs[j].value);
+                // añadimos el texto a la celda
+                columnaTh.appendChild(textCelda)
+                // añadimos la celda a la fila
+                fila.appendChild(columnaTh)
+            }else{
+                // creamos columa
+                let columna = document.createElement("td")
+                columna.style.cssText += `border: solid ${grosor}px ${color}; border-collapse: collapse;`
+                // cremos un texto
+                let textCelda = document.createTextNode(texto);
+                // añadimos el texto a la celda
+                columna.appendChild(textCelda)
+                // añadimos la celda a la fila
+                fila.appendChild(columna)
+            }
         }
         //añadimos la fila a tbody
         tblBody.appendChild(fila)
     }
-
 }
 
 
