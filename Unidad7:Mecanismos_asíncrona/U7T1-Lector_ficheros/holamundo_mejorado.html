@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Hola mundo con AJAX mejorado</title>
 		<script>
+			
 			let READY_STATE_UNINITIALIZED = 0;
 			let READY_STATE_LOADING = 1;
 			let READY_STATE_LOADED = 2;
@@ -18,38 +19,47 @@
 			let peticion_http;
 
             let btn
+			let contenido
 
             // cargamos el url actual donde nos encontremos
             window.addEventListener('load',  () => {
                 let actualURL = window.location.href;
                 document.getElementById("url").value = actualURL;
-                btn = document.getElementById("btn").addEventListener("click", descargaArchivo, true)
+                btn = document.getElementById("btn")
+				btn.addEventListener("click", descargaArchivo, true)
             })
+			// al pinchar el boton descargamos el archivo
+			function descargaArchivo() {
+				//solicitamos cargar el contenido
+				cargaContenido("http://localhost:8090/Unidad7:Mecanismos_asíncrona/U7T1-Lector_ficheros/holamundo_mejorado.html", "GET");
+			}
 
 			function cargaContenido(url, metodo) {
+				//obtenemos la instancio del objeto XHR
 				if (window.XMLHttpRequest) {
 					peticion_http = new XMLHttpRequest();
+
+					// indicamos que funcion se debe llamar cuando cambie el estado de la peticion
+					peticion_http.onreadystatechange = muestraContenido;
+					//configuramos el métofo y la url a la uqe vamoa a ahcer la peticion
+					peticion_http.open(metodo, url, true);
+					//Realizamos la peticion HTTP. Get sin envío de parámetros
+					//En el parámetro se indica la información a enviar al servidor,
+					// es decir lo que queremos visualizar
+					peticion_http.send(muestraContenido);
 				} else {
 					alert("No tienes soporte para AJAX");
 				}
-
-				if (peticion_http) {
-					peticion_http.onreadystatechange = muestraContenido;
-					peticion_http.open(metodo, url, true);
-					peticion_http.send(null);
-				}
+				debugger
 			}
 
 			function muestraContenido() {
+				console.log(`ReadyState: ${peticion_http.readyState}`)
 				if (peticion_http.readyState === READY_STATE_COMPLETE) {
 					if (peticion_http.status === HTTP_STATUS_OK) {
-						alert(peticion_http.responseText);
+						document.getElementById("contenido").value = peticion_http.responseText;
 					}
 				}
-			}
-
-			function descargaArchivo() {
-				cargaContenido("http://localhost:8090/U7_asincrona/teoria/codigo/holamundo.txt", "GET");
 			}
 		</script>
 	</head>
