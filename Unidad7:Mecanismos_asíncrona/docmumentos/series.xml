@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<series>
+    <serie>
+        <titulo>Catzilla</titulo>
+        <cadena>HBO</cadena>
+        <director>Il gatino</director>
+        <anyo>1994</anyo>
+        <terminada>Si</terminada>
+    </serie>
+    <serie>
+        <titulo>El secreto del michifu</titulo>
+        <cadena>Netflix</cadena>
+        <director>Gatinyo</director>
+        <anyo>2002</anyo>
+        <terminada>No</terminada>
+    </serie>
+    <serie>
+        <titulo>Miau la land</titulo>
+        <cadena>Amazon Prime</cadena>
+        <director>Kuroneko III</director>
+        <anyo>2010</anyo>
+        <terminada>Si</terminada>
+    </serie>
+    <serie>
+        <titulo>El lado oscuro de los gatos</titulo>
+        <cadena>Disney+</cadena>
+        <director>Pelido Miau</director>
+        <anyo>2020</anyo>
+        <terminada>No</terminada>
+    </serie>
+</series>
