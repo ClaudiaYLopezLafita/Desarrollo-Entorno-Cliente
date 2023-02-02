@@ -12,24 +12,24 @@ const HTTP_STATUS_SERVER_ERROR = 500;
 window.addEventListener("load", iniciarPeticion, true);
 
 function iniciarPeticion() {
-    document.getElementById("cargaCatalogo").onclick = cargaCatalogo;
+    document.getElementById("cargaJson").onclick = cargaCatalogo;
 }
 
 function cargaCatalogo() {
-    let xhttpr =  new XMLHttpRequest();
-	xhttpr.onreadystatechange = function () {
-		if (xhttpr.readyState == READY_STATE_COMPLE 
-            && xhttpr.status == HTTP_STATUS_OK) {
-                console.log("readyState: "+xhttpr.readyState);
-
-			capturarInfo(xhttpr.responseXML);
+    let jsonhttpr =  new XMLHttpRequest();
+	jsonhttpr.onreadystatechange = function () {
+		if (jsonhttpr.readyState == READY_STATE_COMPLE 
+            && jsonhttpr.status == HTTP_STATUS_OK) {
+                console.log("readyState: "+jsonhttpr.readyState);
+            let obj = JSON.parse(this.responseText);
+			capturarInfo(obj);
 		}
 	};
-	xhttpr.open("GET", "../docmumentos/series.xml");
-	xhttpr.send(null);
+	jsonhttpr.open("GET", "../docmumentos/tvshow.json", true);
+	jsonhttpr.send(null);
 }
 
-function capturarInfo(docXML){
+function capturarInfo(docJSON){
     let table = document.createElement("table");
     let tbody = document.createElement("tbody");
     //cramos las filas
@@ -59,8 +59,8 @@ function capturarInfo(docXML){
 	tbody.appendChild(tr_header);
 	table.appendChild(tbody);
 
-    let series = docXML.getElementsByTagName("serie");
-
+    let series = docJSON.Series[0].Serie;
+    
     for (let i = 0; i < series.length; i++) {
 
         let tr = document.createElement("tr");
@@ -72,37 +72,40 @@ function capturarInfo(docXML){
         // vamos añadiendo contenido a cada celda captando el valor de los nodos hijos
         td_title.appendChild(
 			document.createTextNode(
-				series[i].childNodes[1].childNodes[0].nodeValue
+				series[i].Titulo
 			)
 		);
         console.log(td_title.value)
         td_cadena.appendChild(
 			document.createTextNode(
-				series[i].childNodes[3].childNodes[0].nodeValue
+				series[i].Cadena
 			)
 		);
         td_director.appendChild(
 			document.createTextNode(
-				series[i].childNodes[5].childNodes[0].nodeValue
+				series[i].Director
 			)
 		);
+        debugger
+
         // anyo
-        let num = series[i].childNodes[7].childNodes[0].nodeValue
+        let num = parseInt(series[i].Anyo)
         let anyo = document.createTextNode(
-            series[i].childNodes[7].childNodes[0].nodeValue
+            series[i].Anyo
         )
         if(num < 2000){
             td_anyo.className="rojo"
-        } else if(2001 <= num <= 2010){
+        } else if(2001 <= num && num<= 2010){
             td_anyo.className="amarillo"
-        } else if(2011 < num){
+        } else if(2011<num){
             td_anyo.className="verde"
         }
         td_anyo.appendChild(anyo);
+
         // estado
         td_estado.appendChild(
 			document.createTextNode(
-				series[i].childNodes[9].childNodes[0].nodeValue
+				series[i].Terminada
 			)
 		);
 
@@ -113,6 +116,5 @@ function capturarInfo(docXML){
         tr.appendChild(td_estado);
 		tbody.appendChild(tr);
     }
-    debugger
     document.getElementById("resultado").appendChild(table);
 }

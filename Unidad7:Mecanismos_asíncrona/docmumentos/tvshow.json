@@ -1,0 +1,34 @@
+{
+    "Series":[
+        {
+            "Serie":[
+                {
+                    "Titulo": "Catzilla", 
+                    "Cadena":"HBO", 
+                    "Director":"Il gatino",
+                    "Anyo":"1994",
+                    "Terminada": "Si"
+                },
+                {
+                    "Titulo": "El secreto del michifu", 
+                    "Cadena":"Netflix", 
+                    "Director":"Gatinyo",
+                    "Anyo":"2002",
+                    "Terminada": "No"
+                },
+                {
+                    "Titulo": "Miau la land", 
+                    "Cadena":"Amazon Prime", 
+                    "Director":"Kuroneko III",
+                    "Anyo":"2010",
+                    "Terminada": "Si"},
+                {
+                    "Titulo": "El lado oscuro de los gatos", 
+                    "Cadena":"Disney+", 
+                    "Director":"Pelido Miau",
+                    "Anyo":"2020",
+                    "Terminada": "NO"}
+            ]
+        }
+    ]
+}
