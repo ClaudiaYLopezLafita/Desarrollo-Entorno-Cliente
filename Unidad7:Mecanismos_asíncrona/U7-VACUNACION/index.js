@@ -17,7 +17,7 @@ let respuesta_insercion;
 function inicio() {
     // document.getElementById("modificar_datos").addEventListener("click", modificar_datos);
     document.getElementById("cargar_resquest").addEventListener("click", carga_datos_request);
-    // document.getElementById("cargar_fetch").addEventListener("click", carga_datos_fetch);
+    document.getElementById("cargar_fetch").addEventListener("click", carga_datos_fetch);
 }
 
 // SEGUNDO SOLICITAMOS UNA PETICION PARA CAPTAR EL JSON
@@ -39,6 +39,10 @@ function carga_datos_request() {
 	jsonhttpr.send(null);
 }
 
+function carga_datos_fetch(){
+
+}
+
 function procesa_json(obj){
     comunidades=[];
     //vamos añadiendo las comunidades en un array
@@ -54,16 +58,20 @@ function procesa_json(obj){
             comunidades.push(comunidad);
         }
     }
+    document.getElementById('resultados').innerHTML= ""
     let table  = genera_esqueleto_tabla();
     //aádimos la estrucutra a la html
     document.getElementById('resultados').appendChild(table);
-    table.appendChild(genera_fila_datos(comunidades));
+    comunidades.forEach(comunidad =>{
+        table.appendChild(genera_fila_datos(comunidad));
+    })
     carga_select_ccaa();
 }
 
 function genera_esqueleto_tabla(){
     // generamos la tabla
     let table = document.createElement('table');
+    table.className='table';
     // generamos la fila
     let tr_header = document.createElement('tr');
     // generamos las columnas con su contenido
@@ -95,7 +103,35 @@ function genera_esqueleto_tabla(){
     return table;
 }
 
-function genera_fila_datos(comunidades)
+function genera_fila_datos(comunidad){
+
+    let fila = document.createElement('tr');
+    debugger
+    let td_ccaa = document.createElement('td')
+    td_ccaa.appendChild(document.createTextNode(comunidad.ccaa))
+    let td_dEntregasd = document.createElement('td')
+    td_dEntregasd.appendChild(document.createTextNode(comunidad.dosisEntregadas))
+    let td_dAdministrada = document.createElement('td')
+    td_dAdministrada.appendChild(document.createTextNode(comunidad.dosisAdministradas))
+    let td_dCompletada = document.createElement('td')
+    td_dCompletada.appendChild(document.createTextNode(comunidad.dosisPautaCompletada))
+    let td_pEntregada = document.createElement('td')
+    td_pEntregada.appendChild(document.createTextNode(comunidad.porcentajeEntregadas))
+    let td_pAdministrada = document.createElement('td')
+    td_pAdministrada.appendChild(document.createTextNode(comunidad.porcentajePoblacionAdministradas))
+    let td_pCompletas = document.createElement('td')
+    td_pCompletas.appendChild(document.createTextNode(comunidad.porcentajePoblacionCompletas))
+
+    fila.appendChild(td_ccaa);
+    fila.appendChild(td_dEntregasd);
+    fila.appendChild(td_dAdministrada);
+    fila.appendChild(td_dCompletada);
+    fila.appendChild(td_pEntregada);
+    fila.appendChild(td_pAdministrada);
+    fila.appendChild(td_pCompletas);
+
+    return fila 
+}
 
 // CARGAMOS EL SELECT DINAMICAMENTE
 function carga_select_ccaa(){
