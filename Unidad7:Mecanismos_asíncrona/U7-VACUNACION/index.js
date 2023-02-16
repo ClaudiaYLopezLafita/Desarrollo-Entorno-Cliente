@@ -11,39 +11,96 @@ const HTTP_STATUS_NOT_FOUND = 404;
 const HTTP_STATUS_SERVER_ERROR = 500;
 
 let comunidades = [];
-let respuesta_insercion;
 
 // PRIMERO CAPTURAMOS LOS EVENTOS DE LOS BOTONES AL CARGAR LA PÁGINA
 function inicio() {
-    // document.getElementById("modificar_datos").addEventListener("click", modificar_datos);
+    document.getElementById("modificar_datos").addEventListener("click", modificar_datos);
     document.getElementById("cargar_resquest").addEventListener("click", carga_datos_request);
     document.getElementById("cargar_fetch").addEventListener("click", carga_datos_fetch);
 }
 
-// SEGUNDO SOLICITAMOS UNA PETICION PARA CAPTAR EL JSON
+// SOLICITAMOS UNA PETICION PARA CAPTAR EL JSON
 function carga_datos_request() {
-    //creamo una nueva peticion
+    //primero: creamo una nueva peticion
     let jsonhttpr =  new XMLHttpRequest();
-    //vamos comprobando el estaod
+    //Segundo: funcion anonima que recoge y trae datos
 	jsonhttpr.onreadystatechange = function () {
+        // comprobamos el estado de la peticion
 		if (jsonhttpr.readyState == READY_STATE_COMPLE 
             && jsonhttpr.status == HTTP_STATUS_OK) 
         {
             console.log("readyState: "+jsonhttpr.readyState);
-            let obj = JSON.parse(this.responseText);
+            let obj = JSON.parse(jsonhttpr.responseText);
 			procesa_json(obj);
+            document.getElementById("info").innerHTML="Obtencion de datos XMLHttpRequest"
 		}
 	};
-    //solicitamos el archivo json
+    //tercero: solicitamos y configutamos la peticion
 	jsonhttpr.open("GET", "latest.json", true);
+    //cuarto: realizamos la peticion 
 	jsonhttpr.send(null);
 }
-
+// visualización de datos por metodo fecth
 function carga_datos_fetch(){
-
+    let url = "latest.json"
+    // metodo GET no necesita aclaraciones
+    fetch(url)
+    .then((response) => {
+        //es un objeto response, no podemos acceder directamente a el
+        if (response.ok) {
+            return response.json(); //devulve un texto plano
+        }
+        //el primer fetch devuelve una promesa que debe se procesada
+    }).then((data) => {
+        procesa_json(data);
+        document.getElementById("info").innerHTML="Obtencion de datos Fecth"
+    }).catch((err) => console.log("Error: " + err));
 }
+// capturamos la informacion de los input type=number para modificar
+function modificar_datos(){
+    debugger
+    let comunidad ={
+        ccaa: document.getElementById('cc.aa').value,
+        dosisEntregadas: parseInt(document.getElementById('dosis_entregada').value),
+        dosisAdministradas: parseFloat(document.getElementById('dosis_administrada').value),
+        dosisPautaCompletada: parseFloat(document.getElementById('dosis_completa').value),
+        porcentajeEntregadas: parseFloat(document.getElementById('porcentaje_entregas').value),
+        porcentajePoblacionAdministradas: parseFloat(document.getElementById('por_pobl_administradas').value),
+        porcentajePoblacionCompletas: parseFloat(document.getElementById('por_pobl_completa').value)        
+    }
 
+    let url = 'actualizar_comunidad.php'
+    debugger
+    fetch(url, {
+        //metodo
+        method: "POST",
+        // le indicamos que le vamos que tipo de dato le estamos enviando
+        headers: {
+            "Content-Type": "application/json",
+        },
+        // pasao de conversion a cadena desde JSON
+        body: JSON.stringify(comunidad),
+    }).then((response) => {
+        //es un objeto response, no podemos acceder directamente a el
+        if (response.ok) {
+            return response.json(); 
+        }
+    }).then(
+        (data) => {
+            for (let i = 0; i < data.length; i++) {
+                if (data.ccaa === data[i].ccaa) {
+                    data[i] = data;
+            }
+            }
+            console.log(data);
+            procesa_json(data);
+            document.getElementById("info").innerHTML = "Datos Modificados"
+        }
+    ).catch((err) => console.log("Error: " + err))
+}
+//Procesa los datos del json
 function procesa_json(obj){
+    //array donde iremos meitendo las comunidades de interes
     comunidades=[];
     //vamos añadiendo las comunidades en un array
     for( let comunidad of obj){
@@ -58,6 +115,7 @@ function procesa_json(obj){
             comunidades.push(comunidad);
         }
     }
+    // impedirá que se vayan colocando tablas una debajo de otroa
     document.getElementById('resultados').innerHTML= ""
     let table  = genera_esqueleto_tabla();
     //aádimos la estrucutra a la html
@@ -106,7 +164,7 @@ function genera_esqueleto_tabla(){
 function genera_fila_datos(comunidad){
 
     let fila = document.createElement('tr');
-    debugger
+
     let td_ccaa = document.createElement('td')
     td_ccaa.appendChild(document.createTextNode(comunidad.ccaa))
     let td_dEntregasd = document.createElement('td')
@@ -135,7 +193,7 @@ function genera_fila_datos(comunidad){
 
 // CARGAMOS EL SELECT DINAMICAMENTE
 function carga_select_ccaa(){
-    // document.getElementById("ccaa").innerHTML = "";
+    document.getElementById("ccaa").innerHTML = "";
     let select = document.getElementById("cc.aa");
     // creamos un <option> por cada ccaa
     for( let comunidad of comunidades){
