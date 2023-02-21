@@ -18,10 +18,12 @@ function cargar_datos_vehiculos() {
             console.log("readyState: "+xhr.readyState);
             console.log("onreadystatechange - peticion a Vehiculo Ghibli");
             let vehiculos = JSON.parse(xhr.responseText);
-            console.log(vehiculos)
 			procesa_datos(vehiculos);
-            inserta_en_bbdd(array_vehiculos)
+            //visualizar antes de insertar
+            visualiza_tabla_vehiculos(array_vehiculos)
             document.getElementById("info").innerHTML="Vehiculos Cargados"
+            inserta_en_bbdd(array_vehiculos)
+            document.getElementById("info").innerHTML="Vehiculos Insertados"
 		}
     };
     //tercero: solicitamos y configutamos la peticion
@@ -43,7 +45,7 @@ function procesa_datos(vehiculos){
             id: vehiculo.id,
             name: vehiculo.name,
             description: vehiculo.description,
-            vehicle_class:  vehiculo.vehicle_class
+            vehicle_class: vehiculo.vehicle_class
         }
         array_vehiculos.push(item)
     });
@@ -61,7 +63,6 @@ function inserta_en_bbdd(array_vehiculos){
         if (response.ok) return response.json() 
     }).then((array_vehiculos)=>{
         console.log(array_vehiculos)
-        visualiza_tabla_vehiculos(array_vehiculos)
     })
 }
 
@@ -79,18 +80,61 @@ function visualiza_tabla_vehiculos(array_vehiculos){
         tr.appendChild(th)
     })
     table.appendChild(tr);
-    console.log(array_vehiculos)
+
     array_vehiculos.forEach((vehiculo)=>{
         let tr = document.createElement('tr');
         for( const camp in vehiculo){
-            let td = createElement('td');
+            let td = document.createElement('td');
             td.appendChild(document.createTextNode(vehiculo[camp]))
             tr.appendChild(td)
         }
+        let td = document.createElement('td');
+        let check = document.createElement('input')
+        check.type="checkbox"
+        check.id = vehiculo.id
+        td.appendChild(check)
+        tr.appendChild(td)
         table.appendChild(tr)
     })
 
     container.appendChild(table)
 }
 
-function registrar_envio(){}
+function registrar_envio(){
+    let envio = {
+        nombre: document.getElementById('name').value,
+        direccion: document.getElementById('direccion').value,
+        telefono: document.getElementById('telefono').value,
+        correo: document.getElementById('email').value,
+        vehiculos: vehiculos_seleccionados()
+    }
+
+    fetch("registrar_envio.php", {
+		method: "POST",
+		headers: {
+			"Content-type": "application/json",
+		},
+		body: JSON.stringify(envio),
+	})
+    .then((response) => {
+        if (response.ok) return response.json();
+    })
+    .then((envio) => {
+        console.log(envio);
+        document.getElementById("info").innerHTML="Envio realizado"
+    });
+}
+
+function vehiculos_seleccionados(){
+
+    var textinputs = document.querySelectorAll('input[type=checkbox]'); 
+    var ids=[]
+
+    textinputs.forEach((input)=>{
+        if (input.checked == true){
+            ids.push(input.id)
+        }
+    })
+
+    return ids;
+}
