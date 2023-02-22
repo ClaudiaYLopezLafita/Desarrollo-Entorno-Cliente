@@ -9,7 +9,12 @@ var max
 //array vacio donde meteremos los personajes para usarlos posteriosmente
 let personajes = []
 
+/**
+ * Carga de dato mediante peticion GET mediante XMLHttpRequest
+ */
 function cargar_datos_xhr(){
+    console.log("Cargar datos mediante metodo XMLHttpRequest")
+    //capturamos los valores para elrango
     min = document.getElementById('minPersonaje').value;
     max = document.getElementById('maxPersonaje').value;
     //bucle para ir recorriendo el ranro
@@ -18,8 +23,8 @@ function cargar_datos_xhr(){
         let xhr = new XMLHttpRequest();
         //comprobamos el estado
         xhr.onreadystatechange = function(){
-            console.log(xhr.readyState)
             if (xhr.readyState === 4 && xhr.status === 200){
+                //datos es un objeto personaje unico
                 datos = JSON.parse(xhr.responseText);
                 // vamos indicando que personaje se va cargardo
                 document.getElementById("resultados").innerHTML += `Personaje ${datos.name} cargado <br>`;
@@ -38,9 +43,12 @@ function cargar_datos_xhr(){
     }
 }
 
+/**
+ * Carga de dato mediante peticion GET mediante Fetch
+ */
 function cargar_datos_fecth(){
     console.log('Cargando datos Fetch')
-
+    //capturamos los valores para el rango
     min = document.getElementById('minPersonaje').value;
     max = document.getElementById('maxPersonaje').value;
     //recorremos el rango
@@ -51,7 +59,8 @@ function cargar_datos_fecth(){
 			if (response.ok) return response.json();
 		})
         .then((datos)=>{
-            //indicamos los personjes que se van cargando
+            // DATOS ES UN OBJETO
+            //indicamos los personjes que se van cargando 
             document.getElementById("resultados").innerHTML += `Personaje ${datos.name} cargado <br>`;
             //vamos insertando los personajes en el array para usarlos mas tardes
             personajes.push(datos);
@@ -65,33 +74,45 @@ function cargar_datos_fecth(){
     }
 }
 
+/**
+ * Vamos creando un option por cada personaje que se la pasa por parametro
+ * @param {Object} datos //personakje
+ */
 function generar_select(datos){
     console.log("generar_select")
-
+    //capturamos el select
     let select = document.getElementById("listPersonaje")
-
+    //cremos un option
     let option = document.createElement("option")
+    //damos valor y texrto
     option.value = datos.id;
     option.text = datos.name;
     select.appendChild(option);
 }
 
+/**
+ * Cremos un ficha para cada peticion de personaje 
+ * @param {Object} datos // es un personaje
+ */
 function mostrar_personaje(datos){
     console.log("Mostrar Personajes")
 
     let table = document.createElement("table")
-    //generamos las filas de la ficha
+    //generamos la para la imagen
     let tr_image = document.createElement('tr')
     let image = document.createElement('img')
     image.src = datos.image;
     tr_image.appendChild(image)
-
+    // fila para nombre
     let tr_name = document.createElement('tr')
     tr_name.appendChild(document.createTextNode(`Nombre: ${datos.name}`))
+    // fila para especie
     let tr_species = document.createElement('tr')
     tr_species.appendChild(document.createTextNode(`Especie: ${datos.species}`))
+    // fila para nombre de localizacion
     let tr_location = document.createElement('tr')
     tr_location.appendChild(document.createTextNode(`Localización: ${datos.location.name}`))
+    // fila para fecha creacion
     let tr_created = document.createElement('tr')
     tr_created.appendChild(document.createTextNode(`Fecha Creacion: ${datos.created}`))
     let hr = document.createElement('hr')
@@ -106,6 +127,12 @@ function mostrar_personaje(datos){
     document.getElementById('fichas').appendChild(table)
 }
 
+////// SEGUNDA PARTE TRABAJAMOS CON EL ARRAY PERSONAJES
+
+/**
+ * De cada personaje capta los episodios que son url 
+ * que se usaran como peticiones
+ */
 function obtener_episodio(){
     console.log('Obtener episodios')
     //capturamos el id del personaje seleccionado (dentro del selecc)
@@ -114,8 +141,9 @@ function obtener_episodio(){
     personajes.forEach((persona)=>{
         //vamos comparando el id de cada personaje cargado con el id 
         if(persona.id == id){
-            //capturamos la url de los episodios del personaje
+            //capturamos el array con la url de los episodios del personaje
             let episodios = persona.episode;
+            //recorremos el array de los episodios
             episodios.forEach((episodio)=>{
                 //de cada episodio de la lista hacemos una peticion GET
                 fetch(episodio)
@@ -123,6 +151,7 @@ function obtener_episodio(){
                     if (response.ok) return response.json();
                 })
                 .then((datos)=>{
+                    //datos es un UNICO episodio
                     //Capturamos la informacion de cada episodio
                     console.log(datos)
                     document.getElementById("resultados").innerHTML += `Episodio ${datos.name} cargado <br>`;
@@ -133,6 +162,7 @@ function obtener_episodio(){
         }
     })
 }
+
 /**
  * Insert in DB
  * @param {Object Json} datos 
@@ -153,6 +183,7 @@ function insertar_en_bbdd(datos) {
     })
     .then((data) => {
         console.log(data);
+        // mostramos el mesaje de insercion
         document.getElementById("resultados").innerHTML += `${data.resultado}<br>`;
     })
     .catch((err) => console.log(err));
