@@ -1,206 +1,242 @@
-window.onload = inicio;
+// array que contendrá la lista de comunidades
+lista_comunidades = [];
 
-const READY_STATE_UNINITIALIZED = 0;
-const READY_STATE_LOADING = 1;
-const READY_STATE_LOADED = 2;
-const READY_STATE_INTERACTIVE = 3;
-const READY_STATE_COMPLE = 4;
+//PRIMERO: caputramos los eventos de los botones
+window.onload = function () {
+	document.getElementById("modificar_datos").addEventListener("click", modificar_datos);
+	document.getElementById("cargar_resquest").addEventListener("click", cargar_xml);
+	document.getElementById("cargar_fetch").addEventListener("click", cargar_fetch);
+};
 
-const HTTP_STATUS_OK = 200;
-const HTTP_STATUS_NOT_FOUND = 404;
-const HTTP_STATUS_SERVER_ERROR = 500;
+/**
+ * Carga los datos mediante pericion XMLHttpR
+ */
+function cargar_xml() {
+	console.log("cargar mediante xhr");
 
-let comunidades = [];
-
-// PRIMERO CAPTURAMOS LOS EVENTOS DE LOS BOTONES AL CARGAR LA PÁGINA
-function inicio() {
-    document.getElementById("modificar_datos").addEventListener("click", modificar_datos);
-    document.getElementById("cargar_resquest").addEventListener("click", carga_datos_request);
-    document.getElementById("cargar_fetch").addEventListener("click", carga_datos_fetch);
-}
-
-// SOLICITAMOS UNA PETICION PARA CAPTAR EL JSON
-function carga_datos_request() {
-    //primero: creamo una nueva peticion
-    let jsonhttpr =  new XMLHttpRequest();
-    //Segundo: funcion anonima que recoge y trae datos
-	jsonhttpr.onreadystatechange = function () {
-        // comprobamos el estado de la peticion
-		if (jsonhttpr.readyState == READY_STATE_COMPLE 
-            && jsonhttpr.status == HTTP_STATUS_OK) 
-        {
-            console.log("readyState: "+jsonhttpr.readyState);
-            let obj = JSON.parse(jsonhttpr.responseText);
-			procesa_json(obj);
-            document.getElementById("info").innerHTML="Obtencion de datos XMLHttpRequest"
+	// Primer paso, crear el XMLHttpRequest
+	let xhr = new XMLHttpRequest();
+	// Segundo paso, una función anónima que recoge y trata los datos
+	xhr.onreadystatechange = () => {
+		console.log("onreadystatechange - peticion a WEB covid19");
+		if (xhr.readyState === 4 && xhr.status === 200) {
+			document.getElementById("info").innerHTML = "Datos Insertado XMLHR";
+			let comunidades = JSON.parse(xhr.responseText);
+			// Proceso las comunidades para obtener los campos de interes
+			procesar_comunidades(comunidades);
+			// genero el select dinamicamente
+			generar_select();
+			// Hago la petición mediante POST a insertar_comunidades.php para insertarlo en la BD
+			enviar_insertar_comunidades(lista_comunidades);
 		}
 	};
-    //tercero: solicitamos y configutamos la peticion
-	jsonhttpr.open("GET", "latest.json", true);
-    //cuarto: realizamos la peticion 
-	jsonhttpr.send(null);
-}
-// visualización de datos por metodo fecth
-function carga_datos_fetch(){
-    let url = "latest.json"
-    // metodo GET no necesita aclaraciones
-    fetch(url)
-    .then((response) => {
-        //es un objeto response, no podemos acceder directamente a el
-        if (response.ok) {
-            return response.json(); //devulve un texto plano
-        }
-        //el primer fetch devuelve una promesa que debe se procesada
-    }).then((data) => {
-        procesa_json(data);
-        document.getElementById("info").innerHTML="Obtencion de datos Fecth"
-    }).catch((err) => console.log("Error: " + err));
-}
-// capturamos la informacion de los input type=number para modificar
-function modificar_datos(){
-    debugger
-    let comunidad ={
-        ccaa: document.getElementById('cc.aa').value,
-        dosisEntregadas: parseInt(document.getElementById('dosis_entregada').value),
-        dosisAdministradas: parseFloat(document.getElementById('dosis_administrada').value),
-        dosisPautaCompletada: parseFloat(document.getElementById('dosis_completa').value),
-        porcentajeEntregadas: parseFloat(document.getElementById('porcentaje_entregas').value),
-        porcentajePoblacionAdministradas: parseFloat(document.getElementById('por_pobl_administradas').value),
-        porcentajePoblacionCompletas: parseFloat(document.getElementById('por_pobl_completa').value)        
-    }
-
-    let url = 'actualizar_comunidad.php'
-    debugger
-    fetch(url, {
-        //metodo
-        method: "POST",
-        // le indicamos que le vamos que tipo de dato le estamos enviando
-        headers: {
-            "Content-Type": "application/json",
-        },
-        // pasao de conversion a cadena desde JSON
-        body: JSON.stringify(comunidad),
-    }).then((response) => {
-        //es un objeto response, no podemos acceder directamente a el
-        if (response.ok) {
-            return response.json(); 
-        }
-    }).then(
-        (data) => {
-            for (let i = 0; i < data.length; i++) {
-                if (data.ccaa === data[i].ccaa) {
-                    data[i] = data;
-            }
-            }
-            console.log(data);
-            procesa_json(data);
-            document.getElementById("info").innerHTML = "Datos Modificados"
-        }
-    ).catch((err) => console.log("Error: " + err))
-}
-//Procesa los datos del json
-function procesa_json(obj){
-    //array donde iremos meitendo las comunidades de interes
-    comunidades=[];
-    //vamos añadiendo las comunidades en un array
-    for( let comunidad of obj){
-        if (comunidad.ccaa == "Totales" || 
-            comunidad.ccaa == "Fuerzas Armadas" || 
-            comunidad.ccaa == "Sanidad Exterior"){
-            //interrumpe una iteración (en el bucle), 
-            //si se produce una condición específica, 
-            //y continúa con la siguiente iteración del bucle. 
-            continue;
-        }else{
-            comunidades.push(comunidad);
-        }
-    }
-    // impedirá que se vayan colocando tablas una debajo de otroa
-    document.getElementById('resultados').innerHTML= ""
-    let table  = genera_esqueleto_tabla();
-    //aádimos la estrucutra a la html
-    document.getElementById('resultados').appendChild(table);
-    comunidades.forEach(comunidad =>{
-        table.appendChild(genera_fila_datos(comunidad));
-    })
-    carga_select_ccaa();
+	// Tercer paso, configurar la petición (método y url)
+	xhr.open("GET", "latest.json");
+	// Cuarto paso, realizar la petición mediante el send
+	xhr.send();
 }
 
-function genera_esqueleto_tabla(){
-    // generamos la tabla
-    let table = document.createElement('table');
-    table.className='table';
-    // generamos la fila
-    let tr_header = document.createElement('tr');
-    // generamos las columnas con su contenido
-    let th_ccaa = document.createElement('th');
-    th_ccaa.appendChild(document.createTextNode('CC.AA'))
-    let th_dEntregada = document.createElement('th');
-    th_dEntregada.appendChild(document.createTextNode('Dosis Entregada'))
-    let th_dAdministrada = document.createElement('th');
-    th_dAdministrada.appendChild(document.createTextNode('Dosis Administrada'))
-    let th_dCompletada = document.createElement('th');
-    th_dCompletada.appendChild(document.createTextNode('Dosis Completa'))
-    let th_pEntregada = document.createElement('th');
-    th_pEntregada.appendChild(document.createTextNode('% Entregas'))
-    let th_pAdministrada = document.createElement('th');
-    th_pAdministrada.appendChild(document.createTextNode('% Administrada'))
-    let th_pCompletas = document.createElement('th');
-    th_pCompletas.appendChild(document.createTextNode('% Completas'))
-    //unimos las columnas a la fila
-    tr_header.appendChild(th_ccaa);
-    tr_header.appendChild(th_dEntregada);
-    tr_header.appendChild(th_dAdministrada)
-    tr_header.appendChild(th_dCompletada);
-    tr_header.appendChild(th_pEntregada);
-    tr_header.appendChild(th_pAdministrada);
-    tr_header.appendChild(th_pCompletas);
-    //unimos la fila a la tabla
-    table.appendChild(tr_header);
-
-    return table;
+/**
+ * Carga los datos mediante peticion Fetch
+ */
+function cargar_fetch() {
+	console.log("carga mediante fetch");
+	//al ser peticion GET no tendo que indicar el metodo
+	fetch("latest.json")
+	.then((response) => {
+		// si la respuesta es correcta, que devuelva un json
+		if (response.ok) return response.json();
+	})
+	.then((comunidades) => {
+		document.getElementById("info").innerHTML = "Datos Insertados método Fetch";
+		//procesamos los datos para quedarnos con los campos de interes
+		procesar_comunidades(comunidades);
+		//generamos el select dinamicamente
+		generar_select();
+		// Hago la petición mediante POST a insertar_comunidades.php para insertarlo en la BD
+		enviar_insertar_comunidades(lista_comunidades);
+	})
+	.catch((error) => {
+		// que mueste la info del error
+		console.log(error);
+	});
 }
 
-function genera_fila_datos(comunidad){
+/**
+ * Procesa la lista de comunidades para quedarnos con el campo de interes.
+ * @param {Array} comunidades 
+ * @returns Array
+ */
+function procesar_comunidades(comunidades) {
+	// Limpio la variable global, donde guardo...
+	lista_comunidades = [];
 
-    let fila = document.createElement('tr');
-
-    let td_ccaa = document.createElement('td')
-    td_ccaa.appendChild(document.createTextNode(comunidad.ccaa))
-    let td_dEntregasd = document.createElement('td')
-    td_dEntregasd.appendChild(document.createTextNode(comunidad.dosisEntregadas))
-    let td_dAdministrada = document.createElement('td')
-    td_dAdministrada.appendChild(document.createTextNode(comunidad.dosisAdministradas))
-    let td_dCompletada = document.createElement('td')
-    td_dCompletada.appendChild(document.createTextNode(comunidad.dosisPautaCompletada))
-    let td_pEntregada = document.createElement('td')
-    td_pEntregada.appendChild(document.createTextNode(comunidad.porcentajeEntregadas))
-    let td_pAdministrada = document.createElement('td')
-    td_pAdministrada.appendChild(document.createTextNode(comunidad.porcentajePoblacionAdministradas))
-    let td_pCompletas = document.createElement('td')
-    td_pCompletas.appendChild(document.createTextNode(comunidad.porcentajePoblacionCompletas))
-
-    fila.appendChild(td_ccaa);
-    fila.appendChild(td_dEntregasd);
-    fila.appendChild(td_dAdministrada);
-    fila.appendChild(td_dCompletada);
-    fila.appendChild(td_pEntregada);
-    fila.appendChild(td_pAdministrada);
-    fila.appendChild(td_pCompletas);
-
-    return fila 
+	// recorremos la lista de las comunidades
+	comunidades.forEach((comunidad) => {
+		//si el nombre es distonto de totales
+		if (comunidad.ccaa != "Totales") {
+			//creamos un objeto con los campos de interes
+			let item = {
+				ccaa: comunidad.ccaa,
+				dosisEntregadas: comunidad.dosisEntregadas,
+				dosisAdministradas: comunidad.dosisAdministradas,
+				dosisPautaCompletada: comunidad.dosisPautaCompletada,
+				porcentajeEntregadas: comunidad.porcentajeEntregadas,
+				porcentajePoblacionAdministradas:
+					comunidad.porcentajePoblacionAdministradas,
+				porcentajePoblacionCompletas: comunidad.porcentajePoblacionCompletas,
+			};
+			//insertamos el objeto en un array nuevo
+			lista_comunidades.push(item);
+		}
+	});
+	//devolvemos el array con las comunidades indicas y los campos de interes
+	return lista_comunidades;
 }
 
-// CARGAMOS EL SELECT DINAMICAMENTE
-function carga_select_ccaa(){
-    document.getElementById("ccaa").innerHTML = "";
-    let select = document.getElementById("cc.aa");
-    // creamos un <option> por cada ccaa
-    for( let comunidad of comunidades){
-        let option = document.createElement('option');
-        option.value=comunidad.ccaa;
-        option.text=comunidad.ccaa;
-        //vamos añadiendo las opciones a selec
-        select.appendChild(option);
-    }
+/**
+ * generacion dinámica del select
+ */
+function generar_select() {
+	//capturamos el select
+	let select = document.getElementById("cc.aa");
+	select.innerHTML = "";
+	//recorremos el array con las comunidades procesadas
+	lista_comunidades.forEach((comunidad) => {
+		//por cada comunidad creamos un opcion y le damos valor y texto
+		let option = document.createElement("option");
+		option.value = comunidad.ccaa;
+		option.text = comunidad.ccaa;
+		select.appendChild(option);
+	});
+}
+
+/**
+ * Petición POST para enviar los datos a la base de datos
+ * @param {Array} comunidades 
+ */
+function enviar_insertar_comunidades(comunidades) {
+	console.log('Inserción CC.AA en DB');
+	fetch("insertar_comunidades.php", {
+		method: "POST",
+		headers: {
+			"Content-type": "application/json",
+		},
+		body: JSON.stringify(comunidades), //método estático convierte un valor de JavaScript en una cadena JSON,
+	})
+	.then((response) => {
+		if (response.ok) return response.json();
+	})
+	.then((comunidades) => {
+		console.log(comunidades);
+		// metodo que no construirá la tabla
+		construir_tabla(comunidades);
+	});
+}
+
+/**
+ * Generacion de DOM para la creación de una tabla con los datos necesarios
+ * @param {Array} comunidades 
+ */
+function construir_tabla(comunidades) {
+	// Primero limpio el div por si hubiese restos de anteriores tablas
+	document.getElementById("resultados").innerHTML = "";
+	let tabla = document.createElement("table");
+
+	// Pongo en un array los títulos de la cabecera
+	let headers = [
+		"Comunidad",
+		"D. Entregadas",
+		"D. Admin",
+		"D. Completa",
+		"% Entregadas",
+		"% Pobl. Admin",
+		"% Pobl. Completa",
+	];
+
+	// creo una fila
+	let tr = document.createElement("tr");
+	//voy recorriendo el array de cabeceras para...
+	headers.forEach((header) => {
+		//... crear un columna para cada uno
+		th = document.createElement("th");
+		//añadir el valor 
+		th.appendChild(document.createTextNode(header));
+		//unirlo a la fila
+		tr.appendChild(th);
+	});
+	tabla.appendChild(tr);
+
+	// Ahora genero los datos de la tabla
+	comunidades.forEach((comunidad) => {
+		//creo una fila para cada comunidad
+		let tr = document.createElement("tr");
+		//para cada campo de la comunidad
+		for (const campo in comunidad) {
+			//creo una celda columna
+			let td = document.createElement("td");
+			//cuyo valor sera el contenido del campo de la comunidad
+			td.appendChild(document.createTextNode(comunidad[campo]));
+			tr.appendChild(td);
+		}
+		tabla.appendChild(tr);
+	});
+
+	div_tabla.appendChild(tabla);
+}
+
+/**
+ * Peticion POST para modifcar datos
+ */
+function modificar_datos() {
+	console.log("modificar datos");
+	//capturamos el valor de los input para crear un objeto comunidad
+	let comunidad = {
+		ccaa: document.getElementById("cc.aa").value,
+		dosisEntregadas: document.getElementById("dosis_entregada").value,
+		dosisAdministradas: document.getElementById("dosis_administrada").value,
+		dosisPautaCompletada: document.getElementById("dosis_completa").value,
+		porcentajeEntregadas: document.getElementById("porcentaje_entregas").value,
+		porcentajePoblacionAdministradas: document.getElementById("por_pobl_administradas").value,
+		porcentajePoblacionCompletas: document.getElementById("por_pobl_completa").value,
+	};
+	// realizamos la petición
+	fetch("actualizar_comunidad.php", {
+		method: "POST",
+		headers: {
+			"Content-type": "application/json",
+		},
+		body: JSON.stringify(comunidad),
+	})
+	.then((response) => {
+		if (response.ok) return response.json();
+	})
+	.then((comunidad) => {
+		document.getElementById("info").innerHTML = "Comunidad actualizada";
+		//metodo que nos cambia la tabla
+		actualizar_datos_nuestra_tabla(comunidad);
+	});
+}
+
+/**
+ * modificamos la base de datos
+ * @param {Objeto} comunidad 
+ */
+function actualizar_datos_nuestra_tabla(comunidad) {
+	// recoreemos el array con la lista de comunidad a mostrar
+	lista_comunidades.forEach((ca) => {
+		// buscamos la comunidad que hemos modificado y ponermos 
+		if (ca.ccaa === comunidad.ccaa) {
+			//campo comunidad = dato modificado
+			ca.dosisEntregadas = comunidad.dosisEntregadas;
+			ca.dosisAdministradas = comunidad.dosisAdministradas;
+			ca.dosisPautaCompletada = comunidad.dosisPautaCompletada;
+			ca.porcentajeEntregadas = comunidad.porcentajeEntregadas;
+			ca.porcentajePoblacionAdministradas =
+				comunidad.porcentajePoblacionAdministradas;
+			ca.porcentajePoblacionCompletas = comunidad.porcentajePoblacionCompletas;
+		}
+	});
+	//invocamos al metodo que nos contruye la tabla
+	construir_tabla(lista_comunidades);
 }
