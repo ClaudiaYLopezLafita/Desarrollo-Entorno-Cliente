@@ -196,7 +196,7 @@ function guardar_usuario_fetch(){
     // configuramos el tipo de peticion 
     fetch('save_users.php',{
         method: 'POST',
-        eaders: {
+        headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(lista_usuarios)

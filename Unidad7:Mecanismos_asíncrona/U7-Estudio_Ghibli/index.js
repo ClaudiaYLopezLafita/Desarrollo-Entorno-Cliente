@@ -174,3 +174,4 @@ function vehiculos_seleccionados(){
     //debvolvemos el Array
     return ids;
 }
+
